@@ -65,6 +65,23 @@ CREATE TABLE IF NOT EXISTS fact_sales (
     FOREIGN KEY (customer_id) REFERENCES dim_customers(customer_id),
     FOREIGN KEY (seller_id) REFERENCES dim_sellers(seller_id)
 );
+-- Table Dimension : dim_time
+CREATE TABLE dim_time (
+    date DATE PRIMARY KEY,
+    year INT,
+    month INT,
+    day INT,
+    week INT,
+    day_of_week INT
+);
+CREATE TABLE IF NOT EXISTS dim_payments (
+    payment_id SERIAL PRIMARY KEY,
+    order_id VARCHAR(32),
+    payment_type VARCHAR(50),
+    payment_value FLOAT,
+    payment_date TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES dim_orders(order_id)
+);
 """
 
 cursor.execute(create_tables_sql)

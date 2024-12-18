@@ -4,7 +4,9 @@ SCRIPTS = [
     "scripts/etl_customers.py",
     "scripts/etl_products.py",
     "scripts/etl_sellers.py",
-    #"scripts/etl_time.py",
+    "scripts/etl_time.py",    
+    "scripts/etl_payments.py",
+    "scripts/etl_fact_sales.py",
 ]
 
 def run_etl():
