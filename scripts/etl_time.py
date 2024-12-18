@@ -15,15 +15,14 @@ DATA_LAKE_PATH = "../DataLake"
 
 def process_time():
     print("Traitement de la table dim_time...")
-    df_orders = pd.read_csv(os.path.join(DATA_LAKE_PATH, "orders/olist_orders_dataset.csv"))
+    df_order = pd.read_csv(os.path.join(DATA_LAKE_PATH, "orders/olist_orders_dataset.csv"))
     
-    # Conversion des timestamps en date
-    df_orders['order_date'] = pd.to_datetime(df_orders['order_purchase_timestamp'])
+    df_order['order_date'] = pd.to_datetime(df_order['order_purchase_timestamp'])
     time_df = pd.DataFrame({
-        'date': df_orders['order_date'].dt.date,
-        'year': df_orders['order_date'].dt.year,
-        'month': df_orders['order_date'].dt.month,
-        'quarter': df_orders['order_date'].dt.quarter
+        'order_date': df_order['order_date'],
+        'year': df_order['order_date'].dt.year,
+        'month': df_order['order_date'].dt.month,
+        'quarter': df_order['order_date'].dt.quarter
     }).drop_duplicates()
     
     # Insertion dans PostgreSQL
