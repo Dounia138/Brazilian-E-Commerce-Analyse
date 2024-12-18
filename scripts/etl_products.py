@@ -21,14 +21,14 @@ def process_products():
     )
 
     df_products_name = pd.read_csv(os.path.join(DATA_LAKE_PATH, "product_name/product_category_name_translation.csv"))
-    df_products_select = df_products[['product_id','product_category_name']]
+    df_products_select = products[['product_id','product_category_name']]
     df_product_translation = pd.merge(df_products_select, df_products_name, how = 'left', on = 'product_category_name')
     df_product_translation = df_product_translation[['product_id','product_category_name_english']]
     df_product_final = df_product_translation.rename(columns = {'product_category_name_english':'category'})
 
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    products_clean.to_sql("dim_products", engine, if_exists="append", index=False)
+    df_product_final.to_sql("dim_products", engine, if_exists="append", index=False)
     print("dim_products traitée et chargée avec succès.")
 
 
