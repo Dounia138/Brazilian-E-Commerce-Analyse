@@ -22,6 +22,10 @@ def process_products():
 
     # Nettoyage des doublons
     products_clean = products.dropna().drop_duplicates()
+    df_products_select = df_products[['product_id','product_category_name']]
+    df_product_translation = pd.merge(df_products_select, df_products_name, how = 'left', on = 'product_category_name')
+    df_product_translation = df_product_translation[['product_id','product_category_name_english']]
+    df_product_final = df_product_translation.rename(columns = {'product_category_name_english':'category'})
 
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
