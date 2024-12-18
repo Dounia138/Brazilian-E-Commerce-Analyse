@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS dim_sellers (
 
 -- Table dim_time: Informations sur le temps (dates, mois, trimestre)
 CREATE TABLE IF NOT EXISTS dim_time (
-    date_id VARCHAR(255) PRIMARY KEY,
+    date_id SERIAL PRIMARY KEY,
     order_date DATE,
     year INT,
     quarter VARCHAR(10),

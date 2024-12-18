@@ -17,7 +17,7 @@ DATA_LAKE_PATH = "../DataLake"
 
 def process_customers():
     customers = pd.read_csv(
-        os.path.join(DATA_LAKE_PATH, "customers/olist_customers_dataset.csv") , columns = ["customer_id","customer_city","customer_state"])
+        os.path.join(DATA_LAKE_PATH, "customers/olist_customers_dataset.csv") , usecols= ["customer_id","customer_city","customer_state"])
 
     # Nettoyage des données
     customers_clean = customers.dropna().drop_duplicates(subset=["customer_id"])

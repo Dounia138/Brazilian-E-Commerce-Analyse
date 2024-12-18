@@ -17,7 +17,7 @@ DATA_LAKE_PATH = "../DataLake"
 
 def process_sellers():
     sellers = pd.read_csv(
-        os.path.join(DATA_LAKE_PATH, "sellers/olist_sellers_dataset.csv", columns = ["seller_id", "seller_city"])
+        os.path.join(DATA_LAKE_PATH, "sellers/olist_sellers_dataset.csv"), usecols = ["seller_id", "seller_city"]
     )
 
     df_sellers_filtered = sellers[['seller_id', 'seller_city']]
