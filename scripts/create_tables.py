@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS dim_time (
 
 -- Table fact_sales: Informations sur les ventes
 CREATE TABLE IF NOT EXISTS fact_sales (
-    order_id VARCHAR(255) PRIMARY KEY, 
+    row_id VARCHAR(255), 
+    order_id VARCHAR(255), 
     date_id VARCHAR(255),
     product_id VARCHAR(255),
     customer_id VARCHAR(255),
