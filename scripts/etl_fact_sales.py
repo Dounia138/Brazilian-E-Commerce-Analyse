@@ -23,7 +23,8 @@ def process_fact_sales():
     df_sales = pd.merge(df_order_item,df_order, on='order_id', how='outer')
     dff_sales = pd.merge(df_sales,df_payment, on = 'order_id', how = 'outer')
     dff_sales['date_id'] = pd.to_datetime(dff_sales['order_purchase_timestamp']).dt.date
-    dff_sales = dff_sales[['order_id','order_item_id','product_id','seller_id','date_id','freight_value','price','payment_value','customer_id']]
+    dff_sales['row_id'] = dff_sales['order_id'].astype(str) + '_' + dff_sales['order_item_id'].astype(str)
+    dff_sales = dff_sales[['order_id','order_item_id','product_id','seller_id','date_id','freight_value','price','payment_value','customer_id','row_id']]
     df_sales_rename = dff_sales.rename(columns = {'order_item_id':'order_item','price':'item_price'})
 
 
