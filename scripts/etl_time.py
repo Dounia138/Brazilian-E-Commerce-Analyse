@@ -23,14 +23,12 @@ def process_time():
         'date': orders['order_purchase_timestamp'].dt.date,
         'year': orders['order_purchase_timestamp'].dt.year,
         'month': orders['order_purchase_timestamp'].dt.month,
-        'day': orders['order_purchase_timestamp'].dt.day,
-        'week': orders['order_purchase_timestamp'].dt.isocalendar().week,
-        'day_of_week': orders['order_purchase_timestamp'].dt.dayofweek
+        'quarter': orders['order_purchase_timestamps'].dt.quarter
     }).drop_duplicates()
     
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    time_df.to_sql('dim_time', engine, if_exists='replace', index=False)
+    time_df.to_sql('dim_time', engine, if_exists='append', index=False)
     print("dim_time traitée et chargée avec succès.")
 
 if __name__ == "__main__":

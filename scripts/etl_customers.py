@@ -17,15 +17,14 @@ DATA_LAKE_PATH = "../DataLake"
 
 def process_customers():
     customers = pd.read_csv(
-        os.path.join(DATA_LAKE_PATH, "customers/olist_customers_dataset.csv")
-    )
+        os.path.join(DATA_LAKE_PATH, "customers/olist_customers_dataset.csv") , columns = ["customer_id","customer_city","customer_state"])
 
     # Nettoyage des données
     customers_clean = customers.dropna().drop_duplicates(subset=["customer_id"])
 
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    customers_clean.to_sql("dim_customers", engine, if_exists="replace", index=False)
+    customers_clean.to_sql("dim_customers", engine, if_exists="append", index=False)
     print("dim_customers traitée et chargée avec succès.")
 
 

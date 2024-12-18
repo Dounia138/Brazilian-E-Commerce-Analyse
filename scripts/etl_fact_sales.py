@@ -16,20 +16,18 @@ DATA_LAKE_PATH = "../DataLake"
 
 def process_fact_sales():
     print("Traitement de la table fact_sales...")
-    orders = pd.read_csv(os.path.join(DATA_LAKE_PATH, "orders/olist_orders_dataset.csv"))
-    payments = pd.read_csv(os.path.join(DATA_LAKE_PATH, "payments/olist_order_payments_dataset.csv"))
-    customers = pd.read_csv(os.path.join(DATA_LAKE_PATH, "customers/olist_customers_dataset.csv"))
-    products = pd.read_csv(os.path.join(DATA_LAKE_PATH, "products/olist_products_dataset.csv"))
-    
-    sales = orders.merge(payments, on='order_id', how='left') \
-                  .merge(customers, on='customer_id', how='left') \
-                  .merge(products, on='product_id', how='left')
-    
+    orders = pd.read_csv(os.path.join(DATA_LAKE_PATH, "orders/olist_orders_dataset.csv", columns = ["order_id","customer_id"]))
+    items = pd.read_csv(os.path.join(DATA_LAKE_PATH, "items/olist_order_items_dataset.csv",  columns = ["order_id","product_id", "seller_id", "price", "freight_value", "order_item_id"]))
+    payments = pd.read_csv(os.path.join(DATA_LAKE_PATH, "payments/olist_order_payments_dataset.csv",  columns = ["order_id","payment_value"]))
+
+    sales = orders.merge(items, on='order_id', how='full') \
+                .merge(payments, on = 'order_id', how='full')
+                  
     sales_clean = sales.dropna().drop_duplicates()
     
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    sales_clean.to_sql('fact_sales', engine, if_exists='replace', index=False)
+    sales_clean.to_sql('fact_sales', engine, if_exists='append', index=False)
     print("fact_sales traitée et chargée avec succès.")
 
 if __name__ == "__main__":
