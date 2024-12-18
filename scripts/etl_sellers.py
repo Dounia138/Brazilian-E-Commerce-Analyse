@@ -20,7 +20,7 @@ def process_sellers():
         os.path.join(DATA_LAKE_PATH, "sellers/olist_sellers_dataset.csv", columns = ["seller_id", "seller_city"])
     )
 
-    df_sellers_filtered = df_sellers[['seller_id', 'seller_city']]
+    df_sellers_filtered = sellers[['seller_id', 'seller_city']]
 
     engine = create_engine(DATABASE_URL)
     df_sellers_filtered.to_sql("dim_sellers", engine, if_exists="append", index=False)
