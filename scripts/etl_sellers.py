@@ -20,12 +20,10 @@ def process_sellers():
         os.path.join(DATA_LAKE_PATH, "sellers/olist_sellers_dataset.csv")
     )
 
-    # Nettoyage des données
-    sellers_clean = sellers.dropna().drop_duplicates(subset=["customer_id"])
+    df_sellers_filtered = df_sellers[['seller_id', 'seller_city']]
 
-    # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    sellers_clean.to_sql("dim_sellers", engine, if_exists="replace", index=False)
+    df_sellers_filtered.to_sql("dim_sellers", engine, if_exists="append", index=False)
     print("dim_sellers traitée et chargée avec succès.")
 
 
