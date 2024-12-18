@@ -20,8 +20,7 @@ def process_products():
         os.path.join(DATA_LAKE_PATH, "products/olist_products_dataset.csv")
     )
 
-    # Nettoyage des doublons
-    products_clean = products.dropna().drop_duplicates()
+    df_products_name = pd.read_csv(os.path.join(DATA_LAKE_PATH, "product_name/product_category_name_translation.csv"))
     df_products_select = df_products[['product_id','product_category_name']]
     df_product_translation = pd.merge(df_products_select, df_products_name, how = 'left', on = 'product_category_name')
     df_product_translation = df_product_translation[['product_id','product_category_name_english']]
