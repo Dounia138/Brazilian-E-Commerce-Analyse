@@ -28,7 +28,7 @@ def process_products():
 
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
-    products_clean.to_sql("dim_products", engine, if_exists="replace", index=False)
+    products_clean.to_sql("dim_products", engine, if_exists="append", index=False)
     print("dim_products traitée et chargée avec succès.")
 
 
