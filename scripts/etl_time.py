@@ -18,12 +18,15 @@ def process_time():
     df_order = pd.read_csv(os.path.join(DATA_LAKE_PATH, "orders/olist_orders_dataset.csv"))
     
     df_order['order_date'] = pd.to_datetime(df_order['order_purchase_timestamp'])
+
     time_df = pd.DataFrame({
-        'order_date': df_order['order_date'],
+        'date_id': df_order['order_date'].dt.date,
+        'order_date': df_order['order_date'].dt.date,
         'year': df_order['order_date'].dt.year,
         'month': df_order['order_date'].dt.month,
         'quarter': df_order['order_date'].dt.quarter
     }).drop_duplicates()
+    
     
     # Insertion dans PostgreSQL
     engine = create_engine(DATABASE_URL)
